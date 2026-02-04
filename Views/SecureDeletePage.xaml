@@ -1,0 +1,83 @@
+﻿<Page x:Class="Encrypto.Views.SecureDeletePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Background="Transparent">
+
+    <Grid>
+
+        <!-- STATUS -->
+        <Border x:Name="StatusPill"
+                Style="{StaticResource StatusPillStyle}"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Margin="24"
+                Opacity="0">
+            <Border.RenderTransform>
+                <TranslateTransform x:Name="StatusTransform" X="-320"/>
+            </Border.RenderTransform>
+
+            <TextBlock x:Name="StatusText"
+                       Style="{StaticResource StatusTextStyle}"
+                       Text="Deleting..."/>
+        </Border>
+
+        <!-- CONTENT -->
+        <Grid Margin="48">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="32"/>
+
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="36"/>
+
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- HEADER -->
+            <StackPanel Grid.Row="0" Grid.ColumnSpan="2">
+                <TextBlock Text="Secure Delete"
+                           Style="{StaticResource PageHeaderTextStyle}"
+                           Foreground="#FF9A9A"/>
+
+                <TextBlock Text="Best-effort secure file deletion."
+                           Style="{StaticResource PageSubHeaderTextStyle}"/>
+            </StackPanel>
+
+            <!-- FILE -->
+            <TextBlock Grid.Row="2"
+                       Grid.ColumnSpan="2"
+                       Text="File to delete"
+                       Style="{StaticResource FormLabelTextStyle}"/>
+
+            <TextBox Grid.Row="3"
+                     x:Name="FilePathTextBox"
+                     Style="{StaticResource InputTextBoxStyle}"
+                     IsReadOnly="True"/>
+
+            <Button Grid.Row="3"
+                    Grid.Column="1"
+                    Content="Browse"
+                    Style="{StaticResource SecondaryButtonStyle}"
+                    Width="96"
+                    Margin="12,0,0,0"
+                    Click="Pick_Click"/>
+
+            <!-- ACTION -->
+            <Button Grid.Row="5"
+                    Grid.ColumnSpan="2"
+                    Content="Secure Delete"
+                    Style="{StaticResource PrimaryButtonStyle}"
+                    Width="200"
+                    Height="46"
+                    HorizontalContentAlignment="Center"
+                    Click="Delete_Click"/>
+        </Grid>
+
+    </Grid>
+</Page>

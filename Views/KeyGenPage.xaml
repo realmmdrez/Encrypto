@@ -1,0 +1,42 @@
+﻿<Page x:Class="Encrypto.Views.KeyGenPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Background="Transparent">
+
+    <Grid>
+
+        <Border x:Name="StatusPill"
+                Style="{StaticResource StatusPillStyle}"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Margin="24"
+                Opacity="0">
+            <Border.RenderTransform>
+                <TranslateTransform x:Name="StatusTransform" X="-300"/>
+            </Border.RenderTransform>
+
+            <TextBlock x:Name="StatusText"
+                       Style="{StaticResource StatusTextStyle}"
+                       Text="Generating keys..."/>
+        </Border>
+
+        <StackPanel Margin="48">
+            <TextBlock Text="Key Generation"
+                       Style="{StaticResource PageHeaderTextStyle}"/>
+
+            <TextBlock Text="Password protect your private key."
+                       Style="{StaticResource PageSubHeaderTextStyle}"/>
+
+            <PasswordBox x:Name="PasswordBox"
+                         Style="{StaticResource PasswordBoxStyle}"
+                         Margin="0,20,0,20"/>
+
+            <Button Content="Generate Keys"
+                    Style="{StaticResource PrimaryButtonStyle}"
+                    Width="220"
+                    Height="46"
+                    Click="Generate_Click"/>
+        </StackPanel>
+
+    </Grid>
+</Page>

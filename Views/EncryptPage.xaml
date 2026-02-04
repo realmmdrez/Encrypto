@@ -1,0 +1,105 @@
+﻿<Page x:Class="Encrypto.Views.EncryptPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Background="Transparent">
+
+    <Grid>
+
+        <!-- ================= STATUS NOTIFICATION ================= -->
+        <Border x:Name="StatusPill"
+                Style="{StaticResource StatusPillStyle}"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Margin="24"
+                Opacity="0"
+                RenderTransformOrigin="0,0">
+            <Border.RenderTransform>
+                <TranslateTransform x:Name="StatusTransform" X="-320"/>
+            </Border.RenderTransform>
+
+            <TextBlock x:Name="StatusText"
+                       Style="{StaticResource StatusTextStyle}"
+                       Text="Encrypting..."/>
+        </Border>
+
+        <!-- ================= MAIN CONTENT ================= -->
+        <Grid Margin="48">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="32"/>
+
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="20"/>
+
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="36"/>
+
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- HEADER -->
+            <StackPanel Grid.Row="0" Grid.ColumnSpan="2">
+                <TextBlock Text="Encrypt File"
+                           Style="{StaticResource PageHeaderTextStyle}"/>
+
+                <TextBlock Text="Encrypt a file using RSA + AES-GCM hybrid encryption."
+                           Style="{StaticResource PageSubHeaderTextStyle}"/>
+            </StackPanel>
+
+            <!-- INPUT FILE -->
+            <TextBlock Grid.Row="2"
+                       Grid.ColumnSpan="2"
+                       Text="Input File"
+                       Style="{StaticResource FormLabelTextStyle}"/>
+
+            <TextBox Grid.Row="3"
+                     x:Name="InputFileTextBox"
+                     Style="{StaticResource InputTextBoxStyle}"
+                     IsReadOnly="True"/>
+
+            <Button Grid.Row="3"
+                    Grid.Column="1"
+                    Content="Browse"
+                    Style="{StaticResource SecondaryButtonStyle}"
+                    Width="96"
+                    Margin="12,0,0,0"
+                    Click="BrowseInput_Click"/>
+
+            <!-- PUBLIC KEY -->
+            <TextBlock Grid.Row="5"
+                       Grid.ColumnSpan="2"
+                       Text="Public Key (PEM)"
+                       Style="{StaticResource FormLabelTextStyle}"/>
+
+            <TextBox Grid.Row="6"
+                     x:Name="PublicKeyTextBox"
+                     Style="{StaticResource InputTextBoxStyle}"
+                     IsReadOnly="True"/>
+
+            <Button Grid.Row="6"
+                    Grid.Column="1"
+                    Content="Browse"
+                    Style="{StaticResource SecondaryButtonStyle}"
+                    Width="96"
+                    Margin="12,0,0,0"
+                    Click="BrowsePublicKey_Click"/>
+
+            <!-- ACTION -->
+            <Button Grid.Row="8"
+                    Grid.ColumnSpan="2"
+                    Content="Encrypt"
+                    Style="{StaticResource PrimaryButtonStyle}"
+                    Width="180"
+                    Height="46"
+                    Click="Encrypt_Click"/>
+        </Grid>
+
+    </Grid>
+</Page>
