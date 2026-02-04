@@ -1,18 +1,20 @@
-﻿using System.Windows;
+﻿using System.ComponentModel;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using Encrypto.Views;
 
 namespace Encrypto
 {
     public partial class MainWindow : Window
     {
-        // Pages (created once, reused)
         private readonly Page _encryptPage;
         private readonly Page _decryptPage;
         private readonly Page _keyGenPage;
         private readonly Page _secureDeletePage;
 
         private Page? _currentPage;
+        private bool _allowClose;
 
         public MainWindow()
         {
@@ -24,12 +26,46 @@ namespace Encrypto
             _secureDeletePage = new SecureDeletePage();
 
             Navigate(_encryptPage);
-
             SetActiveButtonByIndex(0);
-            Loaded += (_, _) => ForceNavVisualRefresh();
+
+            Closing += OnWindowClosing;
         }
 
-        // ================= CORE NAVIGATION =================
+        // ================= WINDOW BEHAVIOR =================
+
+        private void TopBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ClickCount == 2)
+                return;
+
+            DragMove();
+        }
+
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            AttemptExit();
+        }
+
+        private void OnWindowClosing(object? sender, CancelEventArgs e)
+        {
+            if (_allowClose)
+                return;
+
+            e.Cancel = true;
+            AttemptExit();
+        }
+
+        private void AttemptExit()
+        {
+            var dialog = new ExitConfirmDialog { Owner = this };
+            if (dialog.ShowDialog() == true)
+            {
+                _allowClose = true;
+                Close();
+            }
+        }
+
+        // ================= NAVIGATION =================
 
         private void Navigate(Page targetPage)
         {
@@ -39,8 +75,6 @@ namespace Encrypto
             _currentPage = targetPage;
             MainFrame.Navigate(targetPage);
         }
-
-        // ================= BUTTON HANDLERS =================
 
         private void EncryptButton_Click(object sender, RoutedEventArgs e)
         {
@@ -71,10 +105,8 @@ namespace Encrypto
         private void SetActive(Button activeButton)
         {
             foreach (UIElement child in NavigationPanel.Children)
-            {
                 if (child is Button btn)
                     btn.Tag = "inactive";
-            }
 
             activeButton.Tag = "active";
         }
@@ -85,32 +117,9 @@ namespace Encrypto
                 btn.Tag = "active";
         }
 
-        // ================= EXIT =================
-
         private void ExitButton_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new Encrypto.Views.ExitConfirmDialog
-            {
-                Owner = this
-            };
-
-            bool? result = dialog.ShowDialog();
-
-            if (result == true)
-            {
-                Application.Current.Shutdown();
-            }
-        }
-
-        // ================= VISUAL FIX =================
-
-        private void ForceNavVisualRefresh()
-        {
-            foreach (UIElement child in NavigationPanel.Children)
-            {
-                if (child is Button btn)
-                    btn.InvalidateVisual();
-            }
+            AttemptExit();
         }
     }
 }
